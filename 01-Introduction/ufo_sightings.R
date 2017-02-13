@@ -117,8 +117,8 @@ head(ufo.us)
 # we will want to take a quick look at the date to see where the majority of the data exists.
 # We can do this by creating a histogram of frequencies for UFO sightings over time
 quick.hist <- ggplot(ufo.us, aes(x = DateOccurred)) +
-  geom_histogram() + 
-  scale_x_date(breaks = "50 years")
+  geom_histogram(bins = 100) + 
+  scale_x_date(date_breaks = "100 years")
   
 ggsave(plot = quick.hist,
        filename = file.path("images", "quick_hist.pdf"),
@@ -131,10 +131,10 @@ ufo.us <- subset(ufo.us, DateOccurred >= as.Date("1990-01-01"))
 
 # Let's look at the histogram now
 new.hist <- ggplot(ufo.us, aes(x = DateOccurred)) +
-  geom_histogram(aes(fill='white', color='red')) +
+  geom_histogram(aes(fill='white', color='red'), bins=30) +
   scale_fill_manual(values=c('white'='white'), guide="none") +
   scale_color_manual(values=c('red'='red'), guide="none") +
-  scale_x_date(breaks = "50 years")
+  scale_x_date(date_breaks = "50 years")
 
 ggsave(plot = new.hist,
        filename = file.path("images", "new_hist.pdf"),
@@ -204,7 +204,7 @@ state.plot <- ggplot(all.sightings, aes(x = YearMonth,y = Sightings)) +
   facet_wrap(~State, nrow = 10, ncol = 5) + 
   theme_bw() + 
   scale_color_manual(values = c("darkblue" = "darkblue"), guide = "none") +
-  scale_x_date(breaks = "5 years", labels = date_format('%Y')) +
+  scale_x_date(date_breaks = "5 years", labels = date_format('%Y')) +
   xlab("Years") +
   ylab("Number of Sightings") +
   ggtitle("Number of UFO sightings by Month-Year and U.S. State (1990-2010)")
@@ -229,7 +229,7 @@ state.plot.norm <- ggplot(all.sightings, aes(x = YearMonth,y = Sightings.Norm)) 
   facet_wrap(~State, nrow = 10, ncol = 5) + 
   theme_bw() + 
   scale_color_manual(values = c("darkblue" = "darkblue"), guide = "none") +
-  scale_x_date(breaks = "5 years", labels = date_format('%Y')) +
+  scale_x_date(date_breaks = "5 years", labels = date_format('%Y')) +
   xlab("Years") +
   ylab("Per Capita Number of Sightings (2000 Census)") +
   ggtitle("Number of UFO sightings by Month-Year and U.S. State (1990-2010)")
